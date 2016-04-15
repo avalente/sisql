@@ -1,0 +1,40 @@
+QUERIES = (<BLANK-LINE> | QUERY)*
+
+QUERY = NAME METADATA BODY
+
+METADATA = (ATTRIBUTE | <COMMENT>)*
+
+NAME = <WHITESPACE COMMENT-SYMBOL WHITESPACE NAME-TAG WHITESPACE> NAME-VALUE <WHITESPACE NEWLINE>
+
+ATTRIBUTE = <WHITESPACE COMMENT-SYMBOL WHITESPACE> ATTR-KEY <WHITESPACE> ATTR-VALUE <WHITESPACE NEWLINE>
+
+COMMENT = <WHITESPACE COMMENT-SYMBOL WHITESPACE> !ATTR-KEY TEXT <NEWLINE>
+
+BODY = LINE (LINE | <COMMENT>)*
+LINE = <WHITESPACE> !COMMENT-SYMBOL TEXT <NEWLINE>
+
+COMMENT-SYMBOL = "--"
+
+NAME-TAG = <"@"> "name" <":">
+(* the name is an exception: the leading colon can be omitted for readability*)
+NAME-VALUE = <":">? KEYWORD-DATA
+
+ATTR-KEY = <"@"> KEYWORD-DATA <":">
+ATTR-VALUE = QUOTED-STRING | INTEGER | BOOLEAN | KEYWORD
+
+QUOTED-STRING = <QUOTE> (#"[^\"\\]+" | ESCAPED-CHAR)* <QUOTE>
+KEYWORD = <":"> KEYWORD-DATA
+(* A keyword string, like a symbol, begins with a non-numeric
+   character and can contain alphanumeric characters and *, +, !, -,
+   _, and ?.  (see http://clojure.org/reader for details)
+*)
+KEYWORD-DATA = #"[a-zA-Z][\w\*\+\!\-\?]*"
+ESCAPED-CHAR = #"\\(?s)."
+BOOLEAN = "true" | "false"
+INTEGER = #"\d+"
+
+BLANK-LINE = WHITESPACE NEWLINE
+TEXT = #".*"
+NEWLINE = #"(\r?\n)+"
+WHITESPACE = #"( |\t)*"
+QUOTE = '"'

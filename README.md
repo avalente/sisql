@@ -1,14 +1,16 @@
 # sisql
 
-A Clojure library designed to ... well, that part is up to you.
+A Clojure library designed to exploit the power of relational databases
+
+It was heavily inspired by [Yesql](https://github.com/krisajenkins/yesql)
 
 ## Usage
 
-FIXME
+Not usable yet...
 
 ## License
 
-Copyright © 2016 FIXME
+Copyright © 2016 Angelantonio Valente
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
